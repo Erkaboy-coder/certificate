@@ -1,0 +1,442 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qr code</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+       .search{
+       position: relative;
+       box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+
+       }
+       .search input{
+
+        height: 60px;
+        text-indent: 45px;
+        border: 2px solid #d6d4d4;
+       }
+       .search input:focus{
+        box-shadow: none;
+        border: 2px solid blue;
+       }
+       .search .fa-search{
+        position: absolute;
+        top: 16px;
+        left: 16px;
+       }
+
+       .search button{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 50px;
+        width: 110px;
+        background: blue;
+
+       }
+   body {
+  background-image: url({% static 'images/bg/7.jpg' %});
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+td{
+  color:#0059a7;
+  text-align:center;
+}
+th{
+  text-align:center;
+}
+
+</style>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+
+<!--table-->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<!--table-->
+
+</head>
+<body>
+    <div class="container  mt-5  p-3 mb-5 ">
+        <a href="{% url 'logout' %}" style="float:right"> <i class="fa fa-sign-out" aria-hidden="true"></i>Chiqish</a>
+
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-3">
+                <a href="{% url 'worker_home_page' %}"><img src="{% static 'images/logo1.png' %}" style="float:left;width:250px" alt=""></a>
+                </div>
+                <div class="col-md-9">
+                    <h2 class="" style="color:rgba(0,0,0,0.75);text-align:center;margin-top:20px">
+                        QURILISHDA MUHANDISLIK QIDIRUVLARI, GEOAXBOROT VA SHAHARSOZLIK KADASTRI LOYIHA ILMIY-TEKSHIRISH INSTITUTI</h2>
+                    <br>
+                    <h1 style="color:rgba(0,0,0,0.75);text-align:center;">«O`ZGASHKLITI»</h1>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-2">
+
+            <div class="row height d-flex justify-content-center align-items-center">
+
+                <div class="col-md-8">
+                    {% if messages %}
+                            <ul class="text text-center" style="font-size:15px">
+                                {% for message in messages %}
+                                    {% if message.tags == "error"  %}
+                                        <div class="alert alert-error" style="background-color: #f7d7da;width: 100%;font-size:20px">
+                                            <b><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> </b> <span>{{ message }}</span>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if message.tags == "success"  %}
+                                        <div class="alert alert-success" style="background-color:#d4edda;;width: 100%;font-size:20px">
+                                            <b><i class="fa fa-check-circle" aria-hidden="true"></i> </b> <span>{{ message }}</span>
+                                        </div>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+
+         <div class="container" style="width:120%">
+             {% if user.profile.status == '1' %}
+             <div class="row height d-flex justify-content-center align-items-center">
+                 <div class="col-md-10" >
+                     <button type="button" style="float:right" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+                      <i class="fa fa-plus"></i> Yangi yaratish
+                    </button>
+
+                    <div class="modal fade" id="myModal">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title">Yangi sertifikat yaratish</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+
+                          <!-- Modal body -->
+                          <div class="modal-body">
+                                <form action="{% url 'create_certificate' %}" method="POST" class="" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-3">
+                                                <select class="form-select" id="seria" name="seria" aria-label="Default select example">
+                                                  <option selected value="0">Seriyani tanlang</option>
+                                                  <option value="GDS">GDS</option>
+                                                  <option value="GLS">GLS</option>
+                                                  <option value="GIS">GIS</option>
+                                                  <option value="PRJ">PRJ</option>
+                                                  <option value="OTH">OTH</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="name" name="name" required placeholder="Qaysi yo'nalish bo'yicha">
+                                                <label for="firstname">Yo'nalish nomi</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="firstname" name="firstname" required placeholder="Ismni kiriting">
+                                                <label for="firstname">Ism</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="lastname" name="lastname" required placeholder="Familiyani kiriting">
+                                                <label for="lastname">Familiya</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="fathername" name="fathername" required placeholder="Sharifni kiriting">
+                                                <label for="fathername">Sharf</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="date" class="form-control" id="from" name="from" required>
+                                                <label for="from">Mashg'ulot o'tkazilgan sana qachondan</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="date" class="form-control" id="to" name="to" required>
+                                                <label for="to">Qachongacha</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" placeholder="Mashg'ulot davomiyligi kiriting" class="form-control" id="hours" name="hours" required>
+                                                <label for="to">Mashg'ulot davomiyligi (soat)</label>
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="teacher" name="teacher" required>
+                                                <label for="teacher">Mashg'ulot o'tkazuvchi murabbiy</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-9">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="submit" style="width:100%" class="btn btn-success" value="+ Yaratish">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+                 </div>
+             </div>
+             {% endif %}
+             <br>
+            <div class="row height d-flex justify-content-center align-items-center">
+                 <div class="col-md-10" >
+                     <p>
+                         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                             <i class="fa fa-search-plus" aria-hidden="true"></i> Qidirish
+                          </a>
+                    </p>
+
+                     <div class="collapse p-3 shadow-lg mb-3 bg-body rounded" id="collapseExample" >
+                         <form action="{% url 'search_big' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <select class="form-select" name="seria" aria-label="Default select example">
+                                          <option selected value="0">Seriya bo'yicha</option>
+                                          <option value="GDS">GDS</option>
+                                          <option value="GLS">GLS</option>
+                                          <option value="GIS">GIS</option>
+                                          <option value="PRJ">PRJ</option>
+                                          <option value="OTH">OTH</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <input type="text" name="number" placeholder="Nomer bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <input type="text" name="name" placeholder="Yo'nalishi bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+                             </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <input type="text" name="firstname" placeholder="Ism bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="mb-3">
+                                        <input type="text" name="lastname" placeholder="Familiya bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="mb-3">
+                                        <input type="text" name="fathername" placeholder="Sharif bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                      </div>
+                                  </div>
+                              </div>
+
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="mb-3">
+                                      <label for="time_from" class="form-label">Muddatdan</label>
+                                    <input type="date" id="time_from" name="time_from" placeholder="Muddatdan" class="form-control" aria-describedby="emailHelp">
+                                </div>
+                              </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="time_from" class="form-label">Muddatgacha</label>
+                                        <input type="date" name="time_to" placeholder="Muddatgacha" class="form-control" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="time_from" class="form-label">O'qish davomiyligi</label>
+                                        <input type="text" name="hours" placeholder="O'qish davomiyligi bo'yicha" class="form-control" aria-describedby="emailHelp">
+                                  </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                 <div class="col-md-3">
+                                     <button type="reset" class="btn btn-danger"><i class="fa fa-repeat" aria-hidden="true"></i> Tozalash</button>
+                                 </div>
+                                 <div class="col-md-7">
+
+                                </div>
+
+                                 <div class="col-md-2">
+                                     <button type="submit" style="width:100%" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i> Qidirish</button>
+                                 </div>
+                            </div>
+
+
+                          </form>
+                     </div>
+                </div>
+
+                  <div class="col-md-10">
+
+                   <div class="table-responsive shadow-lg p-3 mb-5 rounded">
+                      <table id="myTable" class="display table table-borderless table-hover table-striped" style="" width="100%" >
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Seriya</th>
+                                  <th>Nomer</th>
+                                  <th>Ism</th>
+                                  <th>Familiya</th>
+                                  <th>O'qish muddati</th>
+                                  <th>Sertifikat</th>
+                                  <th>Ruhsat</th>
+                                  <th>Sozlamalar</th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+
+                              {% for work in works %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{work.seria}}</td>
+                                  <td>
+                                      {% if work.permission == True %}
+                                            {{work.number}}
+                                        {% endif %}
+                                        {% if work.permission == False %}
+                                         <p class="text-danger"> --- </p>
+                                      {% endif %}
+                                  </td>
+                                  <td>{{work.user_firstname}}</td>
+                                  <td>{{work.user_lastname}}</td>
+                                  <td>{{work.issue_date}} - {{work.expiry_date}}</td>
+                                  <td>
+                                      {% if work.permission == True %}
+                                        <a href="/{{ work.file }}" target="_blank">Ko'rish</a>
+                                      {% endif %}
+                                       {% if work.permission == False %}
+                                         <i class="text-danger"> --- </i>
+                                      {% endif %}
+                                  </td>
+                                  <td>
+                                    {% if work.permission == False %}
+                                        <b class="text-danger"><i class="fa fa-close"></i> tasdiqlanmagan</b>
+                                      {% endif %}
+                                    {% if work.permission == True %}
+                                        <b class="text-success"><i class="fa fa-check-circle"></i> tasdiqlangan</b>
+                                      {% endif %}
+                                  </td>
+                                  <td>
+                                      {% if user.profile.status == '2' %}
+                                        <a href="{% url 'show' id=work.id %}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                           {% if work.permission == False %}
+                                                <a href="{% url 'edit' id=work.id %}" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                          {% endif %}
+                                      {% endif %}
+
+                                    {% if user.profile.status == '1' %}
+                                      <a href="{% url 'show' id=work.id %}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+
+                                      {% if work.permission == False %}
+                                                <a href="{% url 'edit' id=work.id %}" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                          {% endif %}
+
+                                    {% endif %}
+
+                                  </td>
+                                </tr>
+                              {% endfor %}
+
+                              </tbody>
+
+
+
+                            </table>
+
+                      </div>
+
+                  </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+<script>
+  $(document).ready(function(){
+      $('#myTable').dataTable();
+  });
+</script>
+
+    <script>
+        $(":input").inputmask();
+
+        $("#search_code").inputmask({"mask": "AAA-9999999"});
+
+        $("#seria").inputmask({"mask": "AAA"});
+    </script>
+
+</body>
+</html>

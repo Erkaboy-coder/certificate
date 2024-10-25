@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 16px;
+        line-height: 150%;
+
+      }
+      h1 {
+        font-size: 30px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      p {
+        margin-bottom: 20px;
+      }
+
+      body{
+        padding:0;
+        margin:0;
+      }
+
+      page {
+        display: block;
+        margin: 0 auto;
+        padding: 50px;
+        height:1220px !important;
+        background-image: url("http://127.0.0.1:8000/data/render/fon2.png") !important;
+        background-repeat: no-repeat;
+        background-size: 100% 100% !important;
+        background-size: cover;
+      }
+
+      .italic {
+        /* text-decoration: underline; */
+        font-style: italic;
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .right {
+        text-align: right;
+      }
+
+      header {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .section__title {
+        text-align: center;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+      section{
+      height:100px;
+      }
+
+      footer {
+        margin-top: 20px;
+        padding: 10px;
+      }
+
+      @media print {
+        body,
+        page {
+          margin: 0;
+          box-shadow: 0;
+
+        }
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+    <page size="a4" layout="landscape">
+
+      <header>
+        <h1>
+            QURILISHDA MUHANDISLIK QIDIRUVLARI,
+            GEOAXBOROT VA SHAHARSOZLIK KADASTRI
+            LOYIHA ILMIY-TEKSHIRISH INSTITUTI
+        </h1>
+        <h1>«O`ZGASHKLITI»</h1>
+        <div style="text-align:center;padding:15px">
+          <img style="width:190px;margin-top:10px" src="http://127.0.0.1:8000/data/render/logo1.png" alt="">
+        </div>
+          <h1 style="color:#F0AE29;font-size:95px">SERTIFIKAT</h1>
+      </header>
+
+      <section>
+        <h1 class="section__title" style="font-style: italic">{{firstname}} {{lastname}} {{fathername}}</h1>
+        <h3 class="section__title">
+          shaharsozlik faoliyatini geoaxborot ta'minoti bo'yicha
+          mutaxassislarni qayta tayyorlash va malaka oshirish
+          o'quv-maslahat markazida
+        </h3>
+        <h3 class="section__title" style="font-style: italic;">«<u style="font-size:20px">{{name}}</u>»</h3>
+        <h3 class="section__title" >mavzusidagi o'quv-amaliy mashg‘ulotda qatnashdi</h3>
+      </section>
+
+      <footer class="light_blue" style="margin-top:230px">
+        <div class="grid-container">
+              <div class="grid-item"><p style="font-size:20px">«O'ZGASHKLITI» <br>bosh direktori</p></div>
+              <div class="grid-item" style="float:right;margin-top:-60px;"><p style="font-size:20px">{{director}}</p></div>
+
+              <div class="grid-item" style="font-size:20px">O'quv-maslahat markazi<br>direktori</div>
+
+            <div class="grid-item"  style="float:right;margin-top:-47px;font-size:20px"><p style="font-size:20px">{{leader}}</p></div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="grid-container" >
+              <div class="grid-item" >
+                <p class="italic" >Mashg'ulot o'tkazilgan sana: &nbsp;&nbsp;&nbsp;&nbsp;{{ from_time }} -- {{ to_time }}</p>
+
+                <p class="italic">Mashg'ulot davomiyligi: &nbsp;&nbsp;&nbsp;&nbsp;{{hours}} soat</p>
+
+                <p class="italic">Mashg'ulot o'tkazuvchi murabbiy: &nbsp;&nbsp;&nbsp;&nbsp;{{teacher}}</p>
+
+                <p class="italic">Sertifikat qayd raqami : &nbsp;&nbsp;&nbsp;&nbsp;{{seria}} {{number}}</p>
+              </div>
+
+              <div class="grid-item"  style="float:right;margin-top:-165px;">
+                <img src="http://127.0.0.1:8000/data/qr_codes/test.png" style="width:150px;margin-right:-15px">
+              </div>
+        </div>
+      </footer>
+
+        <div style="text-align:center;width:106%;margin-top: 25px">
+              <p class="italic" style="font-size:11px;margin-left:-50px;">
+                  Ma’lumotlar to‘g‘riligini mobil telefonda QR-kodni skaner qilish yoki <u style="font-size:11px">certificate.dshk.uz</u> sahifasida sertifikat qayd raqamini kiritish orqali tekshirish mumkin
+              </p>
+        </div>
+
+    </page>
+
+  </body>
+</html>

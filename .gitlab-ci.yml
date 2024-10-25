@@ -1,0 +1,16 @@
+stages:
+  - test
+  - build
+
+test_10.71.2.177:
+  stage: build
+  type: deploy
+  tags:
+   - certificate-test
+  only:
+   - main
+  script:
+   - echo Deploy backend
+   - cp deploy.sh /home/gitlab-runner/certificate.deploy.sh
+   - chmod +x /home/gitlab-runner/certificate.deploy.sh
+   - sudo -u django /home/gitlab-runner/certificate.deploy.sh true

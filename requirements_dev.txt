@@ -1,0 +1,16 @@
+# Extra packages for development needs.
+# Please don't duplicate requirements.txt content, but add packages, what needed only for development.
+asgiref==3.4.1
+Django==3.2.16
+django-cleanup==6.0.0
+gunicorn==20.1.0
+pdfkit==1.0.0
+Pillow==8.4.0
+pkg_resources==0.0.0
+psycopg2-binary==2.9.5
+python-dotenv==0.20.0
+pytz==2022.7.1
+PyVirtualDisplay==3.0
+qrcode==7.3.1
+sqlparse==0.4.3
+typing_extensions==4.1.1

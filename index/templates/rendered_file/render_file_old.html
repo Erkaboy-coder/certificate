@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 16px;
+
+      }
+      h1 {
+        font-size: 28px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      p {
+        margin-bottom: 20px;
+      }
+
+      body{
+        padding:0;
+        margin:0;
+      }
+
+      page {
+        display: block;
+        margin: 0 auto;
+        padding: 50px;
+        height:1220px !important;
+        background-image: url("https://certificate.dshk.uz/data/render/fon1.png") !important;
+        background-repeat: no-repeat;
+        background-size: 100% 100% !important;
+        background-size: cover;
+      }
+
+      .italic {
+        /* text-decoration: underline; */
+        font-style: italic;
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .right {
+        text-align: right;
+      }
+
+      header {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .section__title {
+        text-align: center;
+        padding: 5px;
+        margin-bottom: 20px;
+      }
+      section{
+      height:100px;
+      }
+
+      footer {
+        margin-top: 20px;
+        padding: 10px;
+      }
+
+      @media print {
+        body,
+        page {
+          margin: 0;
+          box-shadow: 0;
+
+        }
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+    <page size="a4" layout="landscape">
+
+      <header>
+        <h1>
+          QURILISHDA MUHANDISLIK QIDIRUVLARI,
+          GEOAXBOROT VA SHAHARSOZLIK KADASTRI
+          LOYIHA ILMIY-TEKSHIRISH INSTITUTI
+        </h1>
+        <h1>«O`ZGASHKLITI»</h1>
+        <div style="text-align:center">
+          <img style="width:170px" src="https://certificate.dshk.uz/data/render/logo2.png" alt="">
+        </div>
+      </header>
+      <br>
+      <section>
+
+        <h1 class="section__title" style="font-style: italic">{{firstname}} {{lastname}} {{fathername}}</h1>
+        <h3 class="section__title">
+          shaharsozlik faoliyatini geoaxborot ta'minoti bo'yicha
+          mutaxassislarni qayta tayyorlash va malaka oshirish
+          o'quv-maslahat markazida
+        </h3>
+        <h3 class="section__title" style="font-style: italic;"> {{name}} </h3>
+        <h4 style="text-align:center"><i>mavzusidagi o'quv-amaliy mashg‘ulotda qatnashdi</i></h4>
+      </section>
+
+
+      <footer class="light_blue" style="margin-top:350px">
+
+
+        <div class="grid-container">
+              <div class="grid-item"><p>«O'ZGASHKLITI» <br>bosh direktori</p></div>
+              <div class="grid-item" style="float:right;margin-top:-40px">{{director}}</div>
+          <br>
+              <div class="grid-item">O'quv-maslahat markazi<br>direktori</div>
+
+              <div class="grid-item"  style="float:right;margin-top:-40px">{{leader}}</div>
+        </div>
+        <br><br><br>
+
+        <div class="grid-container" >
+              <div class="grid-item" >
+<!--                date:"d-m-Y"-->
+                <p class="italic" >Mashg'ulot o'tkazilgan sana: &nbsp;&nbsp;&nbsp;&nbsp;{{ from_time }} -- {{ to_time }}</p>
+                <br>
+                <p class="italic">Mashg'ulot davomiyligi: &nbsp;&nbsp;&nbsp;&nbsp;{{hours}} soat</p>
+                <br>
+                <p class="italic">Mashg'ulot o'tkazuvchi murabbiy: &nbsp;&nbsp;&nbsp;&nbsp;{{teacher}}</p>
+                <br>
+                <p class="italic">Sertifikat qayd raqami : &nbsp;&nbsp;&nbsp;&nbsp;{{seria}} {{number}}</p>
+              </div>
+
+              <div class="grid-item"  style="float:right;margin-top:-200px;">
+                <img src="https://certificate.dshk.uz/data/qr_codes/test.png" style="width:200px;margin-right:-15px">
+              </div>
+        </div>
+
+      </footer>
+
+    </page>
+  </body>
+</html>

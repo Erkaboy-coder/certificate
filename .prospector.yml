@@ -1,0 +1,44 @@
+autodetect: false
+strictness: none
+doc-warnings: false
+test-warnings: true
+member-warnings: true
+
+uses:
+  - django
+
+pep8:
+  options:
+    max-line-length: 200
+  disable:
+    - E123 # It's ok if closing bracket does not match indentation. Especially in admin fieldset definition.
+
+pylint:
+  options:
+    max-line-length: 200
+    string-quote: "single"
+    triple-quote: "double"
+    docstring-quote: "double"
+  load-plugins:
+    - pylint_quotes
+  disable:
+    - import-outside-toplevel # Sometimes silly rule and even auto generated mange.py doesn't pass it
+    - useless-object-inheritance # Because Meta class is needed for abstract classes
+    - too-many-ancestors # DRF also inherit from a class which has itself (too) many ancestors
+    - signature-differs # It's ok, because whenb override you keep your code style
+    - assignment-from-no-return # This options is bug full in pylint and shows where no needed
+    - no-self-use # common use in serializers
+    - arguments-differ # it's normal for django overrides
+    - invalid-name # Django naming style very often confilct with this
+    - no-member # OsGEo centroid is not a member
+    - broad-except # In my opinion also normal situation. Better than write exceptions for all type of errors
+    - redefined-builtin # Normal approach in drf serializers
+    - simplifiable-if-expression # This is if else oneliner
+    - too-many-locals # Allows only 15 local variables
+    - protected-access # Access to a protected member _log
+    - function-redefined # allow to redefine FileField
+    - redefined-outer-name # allow to redefine FileField storage
+
+mccabe:
+  disable:
+    - MC0001 # models clean method is too complex
