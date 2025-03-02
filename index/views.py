@@ -152,18 +152,29 @@ def worker_home_page(request):
 
 
 
-def generete_num(number):
-    numstr = str(number)
+# def generete_num(number):
+#     numstr = str(number)
 
+#     while len(numstr) != 3:
+#         numstr = '0'+numstr
+
+#     date = datetime.now()
+#     year = date.year % 100
+#     month = '%02d' % date.month
+#     number = str(numstr) + str(month) + str(year)
+#     return number
+
+
+def generate_num(works):
+    numstr = str(works)
     while len(numstr) != 3:
-        numstr = '0'+numstr
+        numstr = '0' + numstr
 
     date = datetime.now()
     year = date.year % 100
     month = '%02d' % date.month
     number = str(numstr) + str(month) + str(year)
     return number
-
 
 
 def create_certificate(request):
@@ -257,11 +268,91 @@ def edit_certificate(request,id):
 
 
 
-def give_permission(request,id):
+# def give_permission(request,id):
+#     if request.method == "POST":
+#         try:
+#             with transaction.atomic():
+#                 certificate = Certificate.objects.filter(id=id).first()
+#                 certificate.permission = True
+#                 certificate.save()
+
+#                 today = datetime.now()
+#                 works = Certificate.objects.filter(active_time__month=today.month, permission=True,
+#                                                    active_time__year=today.year).count()
+#                 print('==>', works)
+#                 from_time = certificate.issue_date.strftime("%d-%m-%Y")
+#                 to_time = certificate.expiry_date.strftime("%d-%m-%Y")
+#                 if certificate.number:
+#                     number = certificate.number
+#                 else:
+#                     number = generete_num(works)
+
+
+#                 url = f"https://certificate.dshk.uz/data/certificates/{certificate.seria}-{number}.pdf"
+#                 img = make(url, border=0)
+#                 img.save('data/qr_codes/test.png')
+
+#                 template = get_template("rendered_file/render_file.html", using=None)
+
+#                 qr_image = "data/qr_codes/test.png"
+
+#                 print(number)
+#                 contextPage = {
+#                     'firstname': certificate.user_firstname,
+#                     'lastname': certificate.user_lastname,
+#                     'fathername': certificate.user_fathername,
+#                     "from_time": from_time,
+#                     'to_time': to_time,
+#                     'hours': certificate.hours,
+#                     'name': certificate.name,
+#                     'seria': certificate.seria,
+#                     'number': number,
+#                     'teacher': certificate.teacher,
+#                     'qr_image': qr_image,
+#                     "director": "Yu.Magrupov",
+#                     "leader": "G.Xadjibaeva",
+#                 }
+
+#                 htmlPage = template.render(contextPage)
+
+#                 options = {
+#                     'page-size': 'A4',
+#                     'encoding': "UTF-8",
+#                     'margin-top': '0.5in',
+#                     'margin-right': '0.5in',
+#                     'margin-bottom': '0.2in',
+#                     'margin-left': '0.5in',
+#                     'orientation': 'portrait',
+#                     "enable-local-file-access": "",
+#                     # landscape bu albomiy qiladi
+#                 }
+#                 display = Display(visible=0, size=(500, 500)).start()
+#                 pdfkit.from_string(htmlPage, f"data/certificates/{certificate.seria}-{number}.pdf", options)
+
+#                 print("=>", certificate.id)
+#                 path = f"data/certificates/{certificate.seria}-{number}.pdf"
+#                 print(path)
+
+#                 certificate.file = path
+#                 certificate.number = number
+#                 certificate.save()
+
+#                 messages.success(request, 'Tasdiqlandi')
+#                 return redirect('worker_home_page')
+#         except IntegrityError:
+#             messages.error(request, 'Ma\'lumotlar bazasiga saqlashda xatolik bor')
+#             return redirect('worker_home_page')
+
+
+def give_permission(request, id):
     if request.method == "POST":
         try:
             with transaction.atomic():
-                certificate = Certificate.objects.filter(id=id).first()
+                certificate = Certificate.objects.select_for_update().filter(id=id).first()
+                if not certificate:
+                    messages.error(request, 'Certificate not found')
+                    return redirect('worker_home_page')
+
                 certificate.permission = True
                 certificate.save()
 
@@ -269,15 +360,16 @@ def give_permission(request,id):
                 works = Certificate.objects.filter(active_time__month=today.month, permission=True,
                                                    active_time__year=today.year).count()
                 print('==>', works)
+
                 from_time = certificate.issue_date.strftime("%d-%m-%Y")
                 to_time = certificate.expiry_date.strftime("%d-%m-%Y")
-                if certificate.number:
-                    number = certificate.number
-                else:
-                    number = generete_num(works)
 
+                if not certificate.number:
+                    number = generate_num(works)
+                    certificate.number = number
+                    certificate.save()
 
-                url = f"https://certificate.dshk.uz/data/certificates/{certificate.seria}-{number}.pdf"
+                url = f"https://certificate.dshk.uz/data/certificates/{certificate.seria}-{certificate.number}.pdf"
                 img = make(url, border=0)
                 img.save('data/qr_codes/test.png')
 
@@ -285,7 +377,7 @@ def give_permission(request,id):
 
                 qr_image = "data/qr_codes/test.png"
 
-                print(number)
+                print(certificate.number)
                 contextPage = {
                     'firstname': certificate.user_firstname,
                     'lastname': certificate.user_lastname,
@@ -295,7 +387,7 @@ def give_permission(request,id):
                     'hours': certificate.hours,
                     'name': certificate.name,
                     'seria': certificate.seria,
-                    'number': number,
+                    'number': certificate.number,
                     'teacher': certificate.teacher,
                     'qr_image': qr_image,
                     "director": "Yu.Magrupov",
@@ -313,17 +405,15 @@ def give_permission(request,id):
                     'margin-left': '0.5in',
                     'orientation': 'portrait',
                     "enable-local-file-access": "",
-                    # landscape bu albomiy qiladi
                 }
                 display = Display(visible=0, size=(500, 500)).start()
-                pdfkit.from_string(htmlPage, f"data/certificates/{certificate.seria}-{number}.pdf", options)
+                pdfkit.from_string(htmlPage, f"data/certificates/{certificate.seria}-{certificate.number}.pdf", options)
 
                 print("=>", certificate.id)
-                path = f"data/certificates/{certificate.seria}-{number}.pdf"
+                path = f"data/certificates/{certificate.seria}-{certificate.number}.pdf"
                 print(path)
 
                 certificate.file = path
-                certificate.number = number
                 certificate.save()
 
                 messages.success(request, 'Tasdiqlandi')
@@ -331,6 +421,7 @@ def give_permission(request,id):
         except IntegrityError:
             messages.error(request, 'Ma\'lumotlar bazasiga saqlashda xatolik bor')
             return redirect('worker_home_page')
+
 
 def logout(request):
     auth_logout(request)
