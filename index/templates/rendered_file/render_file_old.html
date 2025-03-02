@@ -11,10 +11,11 @@
         margin: 0;
         font-family: "Times New Roman", Times, serif;
         font-size: 16px;
+        line-height: 150%;
 
       }
       h1 {
-        font-size: 28px;
+        font-size: 30px;
       }
       h3 {
         font-size: 20px;
@@ -33,7 +34,7 @@
         margin: 0 auto;
         padding: 50px;
         height:1220px !important;
-        background-image: url("https://certificate.dshk.uz/data/render/fon1.png") !important;
+        background-image: url("https://certificate.dshk.uz/data/render/fon2.png") !important;
         background-repeat: no-repeat;
         background-size: 100% 100% !important;
         background-size: cover;
@@ -60,7 +61,7 @@
       .section__title {
         text-align: center;
         padding: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
       }
       section{
       height:100px;
@@ -89,61 +90,64 @@
 
       <header>
         <h1>
-          QURILISHDA MUHANDISLIK QIDIRUVLARI,
-          GEOAXBOROT VA SHAHARSOZLIK KADASTRI
-          LOYIHA ILMIY-TEKSHIRISH INSTITUTI
+            QURILISHDA MUHANDISLIK QIDIRUVLARI,
+            GEOAXBOROT VA SHAHARSOZLIK KADASTRI
+            LOYIHA ILMIY-TEKSHIRISH INSTITUTI
         </h1>
         <h1>«O`ZGASHKLITI»</h1>
-        <div style="text-align:center">
-          <img style="width:170px" src="https://certificate.dshk.uz/data/render/logo2.png" alt="">
+        <div style="text-align:center;padding:15px">
+          <img style="width:190px;margin-top:10px" src="https://certificate.dshk.uz/data/render/logo1.png" alt="">
         </div>
+          <h1 style="color:#F0AE29;font-size:95px">SERTIFIKAT</h1>
       </header>
-      <br>
-      <section>
 
-        <h1 class="section__title" style="font-style: italic">{{firstname}} {{lastname}} {{fathername}}</h1>
+      <section>
+        <h1 class="section__title" style="font-style: italic">{{lastname}} {{firstname}} {{fathername}}</h1>
         <h3 class="section__title">
           shaharsozlik faoliyatini geoaxborot ta'minoti bo'yicha
           mutaxassislarni qayta tayyorlash va malaka oshirish
           o'quv-maslahat markazida
         </h3>
-        <h3 class="section__title" style="font-style: italic;"> {{name}} </h3>
-        <h4 style="text-align:center"><i>mavzusidagi o'quv-amaliy mashg‘ulotda qatnashdi</i></h4>
+        <h3 class="section__title" style="font-style: italic;">«<u style="font-size:20px">{{name}}</u>»</h3>
+        <h3 class="section__title" >mavzusidagi o‘quv-amaliy mashg‘ulotni muvaffiqiyatli yakunladi</h3>
       </section>
 
-
-      <footer class="light_blue" style="margin-top:350px">
-
-
+      <footer class="light_blue" style="margin-top:230px">
         <div class="grid-container">
-              <div class="grid-item"><p>«O'ZGASHKLITI» <br>bosh direktori</p></div>
-              <div class="grid-item" style="float:right;margin-top:-40px">{{director}}</div>
-          <br>
-              <div class="grid-item">O'quv-maslahat markazi<br>direktori</div>
+              <div class="grid-item"><p style="font-size:20px">«O'ZGASHKLITI» <br>bosh direktori</p></div>
+              <div class="grid-item" style="float:right;margin-top:-60px;"><p style="font-size:20px">{{director}}</p></div>
 
-              <div class="grid-item"  style="float:right;margin-top:-40px">{{leader}}</div>
+              <div class="grid-item" style="font-size:20px">O'quv-maslahat markazi<br>direktori</div>
+
+            <div class="grid-item"  style="float:right;margin-top:-47px;font-size:20px"><p style="font-size:20px">{{leader}}</p></div>
         </div>
-        <br><br><br>
-
+        <br>
+        <br>
+        <br>
         <div class="grid-container" >
               <div class="grid-item" >
-<!--                date:"d-m-Y"-->
                 <p class="italic" >Mashg'ulot o'tkazilgan sana: &nbsp;&nbsp;&nbsp;&nbsp;{{ from_time }} -- {{ to_time }}</p>
-                <br>
+
                 <p class="italic">Mashg'ulot davomiyligi: &nbsp;&nbsp;&nbsp;&nbsp;{{hours}} soat</p>
-                <br>
+
                 <p class="italic">Mashg'ulot o'tkazuvchi murabbiy: &nbsp;&nbsp;&nbsp;&nbsp;{{teacher}}</p>
-                <br>
+
                 <p class="italic">Sertifikat qayd raqami : &nbsp;&nbsp;&nbsp;&nbsp;{{seria}} {{number}}</p>
               </div>
 
-              <div class="grid-item"  style="float:right;margin-top:-200px;">
-                <img src="https://certificate.dshk.uz/data/qr_codes/test.png" style="width:200px;margin-right:-15px">
+              <div class="grid-item"  style="float:right;margin-top:-165px;">
+                <img src="https://certificate.dshk.uz/data/qr_codes/test.png" style="width:150px;margin-right:-15px">
               </div>
         </div>
-
       </footer>
 
+        <div style="text-align:center;margin-top:25px;width:106%">
+              <p class="italic" style="font-size:11px;margin-left:-50px;">
+                  Ma’lumotlar to‘g‘riligini mobil telefonda QR-kodni skaner qilish yoki <u style="font-size:11px">certificate.dshk.uz</u> sahifasida sertifikat qayd raqamini kiritish orqali tekshirish mumkin
+              </p>
+        </div>
+
     </page>
+
   </body>
 </html>

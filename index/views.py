@@ -20,7 +20,7 @@ from django.core.files import File
 from index.util.types import *
 from .models import *
 from django.db import transaction, IntegrityError
-
+import random
 def Home(request):
     global data
     if request.method == "POST":
@@ -30,23 +30,59 @@ def Home(request):
     return render(request, "home.html")
 
 def login_page(request):
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    request.session['captcha_result'] = num1 + num2
+    context = {
+        'num1': num1,
+        'num2': num2,
+    }
+    return render(request, "worker/login_page.html", context)
 
-    content = {}
-    return render(request, "worker/login_page.html", content)
 
 def sign_in(request):
-    if request.method == "POST":
-        login = request.POST['login']
-        password = request.POST['password']
+    if request.method == 'POST':
+        login = request.POST.get('login')
+        password = request.POST.get('password')
+        captcha_result = request.POST.get('captcha_result')
+        expected_result = request.session.get('captcha_result')
         user = authenticate(request, username=login, password=password)
+        # Check CAPTCHA
+        if str(captcha_result) != str(expected_result):
+            messages.error(request, 'Tizimga kirish uchun topshiriq yechimi noto\'g\'ri kiritildi!')
+            return redirect('sign_in')
+
         if user is not None:
             dj_login(request, user)
-
             messages.success(request, 'Siz tizimga kirdingiz')
             return redirect('worker_home_page')
         else:
             messages.error(request, 'Login yoki parol xato')
             return redirect('login_page')
+
+    # Generate CAPTCHA
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    request.session['captcha_result'] = num1 + num2
+    context = {
+        'num1': num1,
+        'num2': num2,
+    }
+    return render(request, 'worker/login_page.html', context)
+
+# def sign_in(request):
+#     if request.method == "POST":
+#         login = request.POST['login']
+#         password = request.POST['password']
+#         user = authenticate(request, username=login, password=password)
+#         if user is not None:
+#             dj_login(request, user)
+#
+#             messages.success(request, 'Siz tizimga kirdingiz')
+#             return redirect('worker_home_page')
+#         else:
+#             messages.error(request, 'Login yoki parol xato')
+#             return redirect('login_page')
 
 
 def search(request):

@@ -81,7 +81,48 @@
         }
       }
 
+  .grid-container2 {
+    display: flex;
+    width: 100%;
+  }
 
+  .grid-item2 {
+    flex: 4; /* 80% width */
+    padding-top: 10px;
+  }
+
+  .grid-item2.qr {
+    flex: 1; /* 20% width */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+
+  .qr img {
+    width: 150px;
+    margin-right: -15px;
+  }
+
+
+  .footer2 {
+    text-align: center;
+    width: 100%;
+    margin-top: 25px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footer2 p {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .footer2 u {
+    font-size: 11px;
+  }
 
     </style>
   </head>
@@ -102,14 +143,15 @@
       </header>
 
       <section>
-        <h1 class="section__title" style="font-style: italic">{{firstname}} {{lastname}} {{fathername}}</h1>
+        <h1 class="section__title" style="font-style: italic">{{lastname}} {{firstname}} {{fathername}}</h1>
         <h3 class="section__title">
           shaharsozlik faoliyatini geoaxborot ta'minoti bo'yicha
           mutaxassislarni qayta tayyorlash va malaka oshirish
           o'quv-maslahat markazida
         </h3>
         <h3 class="section__title" style="font-style: italic;">«<u style="font-size:20px">{{name}}</u>»</h3>
-        <h3 class="section__title" >mavzusidagi o'quv-amaliy mashg‘ulotda qatnashdi</h3>
+        <h3 class="section__title" >
+            mavzusidagi o‘quv-amaliy mashg‘ulotni muvaffiqiyatli yakunladi</h3>
       </section>
 
       <footer class="light_blue" style="margin-top:230px">
@@ -124,28 +166,35 @@
         <br>
         <br>
         <br>
-        <div class="grid-container" >
-              <div class="grid-item" >
-                <p class="italic" >Mashg'ulot o'tkazilgan sana: &nbsp;&nbsp;&nbsp;&nbsp;{{ from_time }} -- {{ to_time }}</p>
 
-                <p class="italic">Mashg'ulot davomiyligi: &nbsp;&nbsp;&nbsp;&nbsp;{{hours}} soat</p>
+        <div class="grid-container2">
+          <div class="grid-item2">
+            <p class="italic">Mashg'ulot o'tkazilgan sana: &nbsp;&nbsp;&nbsp;&nbsp;{{ from_time }} -- {{ to_time }}</p>
+            <p class="italic">Mashg'ulot davomiyligi: &nbsp;&nbsp;&nbsp;&nbsp;{{ hours }} soat</p>
+            <p class="italic">Mashg'ulot o'tkazuvchi murabbiy: &nbsp;&nbsp;&nbsp;&nbsp;{{ teacher }}</p>
+            <p class="italic">Sertifikat qayd raqami: &nbsp;&nbsp;&nbsp;&nbsp;{{ seria }} {{ number }}</p>
+          </div>
 
-                <p class="italic">Mashg'ulot o'tkazuvchi murabbiy: &nbsp;&nbsp;&nbsp;&nbsp;{{teacher}}</p>
-
-                <p class="italic">Sertifikat qayd raqami : &nbsp;&nbsp;&nbsp;&nbsp;{{seria}} {{number}}</p>
-              </div>
-
-              <div class="grid-item"  style="float:right;margin-top:-165px;">
-                <img src="http://127.0.0.1:8000/data/qr_codes/test.png" style="width:150px;margin-right:-15px">
-              </div>
+          <div class="grid-item2 qr">
+            <img src="http://127.0.0.1:8000/data/qr_codes/test.png">
+          </div>
         </div>
+
       </footer>
 
-        <div style="text-align:center;width:106%;margin-top: 25px">
-              <p class="italic" style="font-size:11px;margin-left:-50px;">
-                  Ma’lumotlar to‘g‘riligini mobil telefonda QR-kodni skaner qilish yoki <u style="font-size:11px">certificate.dshk.uz</u> sahifasida sertifikat qayd raqamini kiritish orqali tekshirish mumkin
-              </p>
-        </div>
+      <div class="footer2">
+        <p class="italic">
+          Ma’lumotlar to‘g‘riligini mobil telefonda QR-kodni skaner qilish yoki
+          <u>certificate.dshk.uz</u> sahifasida sertifikat qayd raqamini kiritish orqali tekshirish mumkin.
+        </p>
+      </div>
+
+<!--      <div style="text-align:center;width:100%;margin-top: 25px; position: fixed; bottom:0">-->
+<!--              <p class="italic" style="font-size:11px;text-align: center">-->
+<!--                  Ma’lumotlar to‘g‘riligini mobil telefonda QR-kodni skaner qilish yoki <u style="font-size:11px">certificate.dshk.uz</u> sahifasida sertifikat qayd raqamini kiritish orqali tekshirish mumkin-->
+<!--              </p>-->
+<!--        </div>-->
+
 
     </page>
 

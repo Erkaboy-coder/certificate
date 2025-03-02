@@ -14,10 +14,8 @@ from os.path import join
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 from dotenv import load_dotenv
-if os.path.exists(os.path.join(BASE_DIR, 'envs/.env')):
-    load_dotenv(os.path.join(BASE_DIR, 'envs/.env'))
-else:
-    load_dotenv(os.path.join(BASE_DIR, 'envs/dev.env'))
+if os.path.exists(os.path.join(BASE_DIR, '.env')):
+    load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -36,6 +34,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
